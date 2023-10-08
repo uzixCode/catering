@@ -1,5 +1,6 @@
 // ignore: file_names
 
+import 'package:catering/pages/daftar_user_page/daftar_user_page.dart';
 import 'package:catering/pages/main_page/main_page.dart';
 import 'package:catering_core/core.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,7 @@ class LoginPage extends StatelessWidget {
                           width: double.maxFinite,
                           child: TextButton(
                               onPressed: () {
-                                // context.push(const DaftarUserPage());
+                                context.push(const DaftarUserPage());
                               },
                               child: MainText(
                                 "Daftar",

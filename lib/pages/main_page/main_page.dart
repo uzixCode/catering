@@ -50,9 +50,11 @@ class _MainPageState extends State<MainPage> {
                   case 0:
                     return const HomePage();
                   case 1:
-                    return const HistoryPage();
+                    return const KeranjangPage(
+                      isUseAppbar: null,
+                    );
                   case 2:
-                    return const KeranjangPage();
+                    return const HistoryPage();
                   case 3:
                     return const ProfilePage();
                   default:
@@ -75,9 +77,9 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined), label: ("Main")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.archive), label: ("history")),
-            BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart), label: ("cart")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.archive), label: ("history")),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: ("me"))
           ],
         ));

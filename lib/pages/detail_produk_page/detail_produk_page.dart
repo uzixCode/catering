@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:catering_core/core.dart';
 import 'package:catering_core/models/src/produk/produk_res.dart';
 import 'package:catering_core/widgets/src/app_column.dart';
@@ -45,7 +47,6 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
             catatan: catatanCon.text,
             total: total));
     if (res is BaseLogicSuccess<BaseResponse<KeranjangRes>>) {
-      // ignore: use_build_context_synchronously
       context.pop();
     }
   }
@@ -61,10 +62,19 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
       ),
     );
     if (res is BaseLogicSuccess<BaseResponse<KeranjangRes>>) {
-      // ignore: use_build_context_synchronously
       context.read<BaseLogic<List<KeranjangRes>>>().fetch(
           Repositories.getAllKeranjangByUser,
           locator<SettingCubit>().state.kd!);
+      InfoCard(
+        InfoType.success,
+        message: "Berhasil di masukan ke keranjang",
+      ).show(context);
+    }
+    if (res is BaseLogicError) {
+      InfoCard(InfoType.error,
+              message:
+                  res.failure.response.data.toString().replaceAll("\"", ""))
+          .show(context);
     }
   }
 
@@ -176,7 +186,8 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    top: Dimensions.popularFoodImgSize(context) - 20,
+                    top: (Dimensions.popularFoodImgSize(context) - 20) -
+                        MediaQuery.of(context).viewInsets.bottom,
                     child: Container(
                       padding: EdgeInsets.only(
                           left: Dimensions.width20(context),
@@ -210,7 +221,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                             label: "Catatan",
                             controller: catatanCon,
                             maxLines: 2,
-                          )
+                          ),
                         ],
                       ),
                     )),

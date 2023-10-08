@@ -4,8 +4,8 @@ import 'package:catering_core/core.dart';
 import 'package:flutter/material.dart';
 
 class KeranjangPage extends StatefulWidget {
-  const KeranjangPage({super.key});
-
+  const KeranjangPage({super.key, this.isUseAppbar = true});
+  final bool? isUseAppbar;
   @override
   State<KeranjangPage> createState() => _KeranjangPageState();
 }
@@ -35,6 +35,11 @@ class _KeranjangPageState extends State<KeranjangPage> {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
       child: Scaffold(
+        appBar: widget.isUseAppbar == null
+            ? null
+            : AppBar(
+                title: const MainText("Keranjang"),
+              ),
         backgroundColor: AppColors.buttonBackgroundCOlor,
         bottomNavigationBar: BaseBlocBuilder(
           cubit: context.read<BaseLogic<List<KeranjangRes>>>(),
