@@ -110,13 +110,6 @@ class _DetailOrderanAdminState extends State<DetailOrderanAdmin> {
                           ),
                         ),
                       ),
-                      // 20.v,
-                      // Align(
-                      //     alignment: Alignment.centerLeft,
-                      //     child: MainText(
-                      //       "Informasi",
-                      //       style: TextStyle(fontSize: context.fontSize(18)),
-                      //     )),
                       20.v,
                       LRText(
                         left: const Left("Order"),
@@ -197,9 +190,14 @@ class _DetailOrderanAdminState extends State<DetailOrderanAdmin> {
                       ),
                       10.v,
                       LRText(
-                        isUseDivider: false,
                         left: const Left("No telp"),
                         right: Left(data.data?.notelp ?? ""),
+                      ),
+                      10.v,
+                      LRText(
+                        isUseDivider: false,
+                        left: const Left("Catatan"),
+                        right: Left(data.data?.catatan ?? ""),
                       ),
                     ],
                   ),
