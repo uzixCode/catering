@@ -67,10 +67,10 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: AppColors.mainColor,
           unselectedItemColor: Colors.amberAccent,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedFontSize: 0.0,
-          unselectedFontSize: 0.0,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedFontSize: 10.0,
+          unselectedFontSize: 10.0,
           currentIndex: _selectedIndex,
           onTap: onTapNav,
           items: const [
