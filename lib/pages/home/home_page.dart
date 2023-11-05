@@ -195,45 +195,55 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      // height: Dimensions.pageViewTextContainer(context),
-                                      margin: EdgeInsets.only(
-                                        left: Dimensions.width30(context),
-                                        right: Dimensions.width30(context),
-                                        // bottom: Dimensions.height30(context),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.radius20(context)),
-                                          color: Colors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Color(0xFFe8e8e8),
-                                              blurRadius: 5.0,
-                                              offset: Offset(0, 5),
-                                            ),
-                                            BoxShadow(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          // height: Dimensions.pageViewTextContainer(
+                                          //     context),
+                                          margin: EdgeInsets.only(
+                                            left: Dimensions.width30(context),
+                                            right: Dimensions.width30(context),
+                                            // bottom: Dimensions.height30(context),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20(
+                                                          context)),
                                               color: Colors.white,
-                                              offset: Offset(-5, 0),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color(0xFFe8e8e8),
+                                                  blurRadius: 5.0,
+                                                  offset: Offset(0, 5),
+                                                ),
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  offset: Offset(-5, 0),
+                                                ),
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  offset: Offset(5, 0),
+                                                )
+                                              ]),
+                                          child: Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              child: BigText(
+                                                text: data.data?[index].nama ??
+                                                    "-",
+                                                overflow: TextOverflow.ellipsis,
+                                                size:
+                                                    Dimensions.font26(context),
+                                              ),
                                             ),
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              offset: Offset(5, 0),
-                                            )
-                                          ]),
-                                      child: Container(
-                                        padding: EdgeInsets.only(
-                                            top: Dimensions.height20(context),
-                                            bottom:
-                                                Dimensions.height20(context),
-                                            left: Dimensions.height15(context),
-                                            right:
-                                                Dimensions.height15(context)),
-                                        child: AppColumn(
-                                          text: data.data?[index].nama ?? "-",
-                                          est: data.data?[index].estimasi,
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -425,15 +435,23 @@ class _HomePageState extends State<HomePage> {
                                                   height: Dimensions.height10(
                                                       context),
                                                 ),
-                                                IconAndTextWidget(
-                                                    icon: Icons
-                                                        .access_time_rounded,
-                                                    text: data.data?[index]
-                                                            .estimasi
-                                                            .toCurrency() ??
-                                                        "0",
-                                                    iconColor:
-                                                        AppColors.iconColor2),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: MainText(
+                                                          "Rp ${data.data?[index].harga.toCurrency()}"),
+                                                    ),
+                                                    IconAndTextWidget(
+                                                        icon: Icons
+                                                            .access_time_rounded,
+                                                        text: data.data?[index]
+                                                                .estimasi
+                                                                .toCurrency() ??
+                                                            "0",
+                                                        iconColor: AppColors
+                                                            .iconColor2),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ),

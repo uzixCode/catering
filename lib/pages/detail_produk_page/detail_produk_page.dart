@@ -4,6 +4,7 @@ import 'package:catering_core/core.dart';
 import 'package:catering_core/models/src/produk/produk_res.dart';
 import 'package:catering_core/widgets/src/app_column.dart';
 import 'package:catering_core/widgets/src/exandable_text_widget.dart';
+import 'package:catering_core/widgets/src/icon_and_text_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../keranjang/keranjang_page.dart';
@@ -207,9 +208,35 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                               text: data.data?.nama ?? "-",
                               est: data.data?.estimasi ?? 0),
                           SizedBox(
-                            height: Dimensions.height20(context),
+                            height: Dimensions.height10(context),
                           ),
-                          BigText(text: "Deskripsi"),
+                          MainText(
+                            "Rp ${data.data?.harga.toCurrency()}",
+                            style: TextStyle(
+                                color: AppColors.iconColor2,
+                                fontSize: context.fontSize(25)),
+                          ),
+                          const Divider(
+                            thickness: 5,
+                          ),
+                          SizedBox(
+                            height: Dimensions.height10(context),
+                          ),
+                          Row(
+                            children: [
+                              BigText(text: "Deskripsi"),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: IconAndTextWidget(
+                                      icon: Icons.access_time_rounded,
+                                      text:
+                                          "${data.data?.estimasi.toCurrency()} min",
+                                      iconColor: AppColors.iconColor2),
+                                ),
+                              )
+                            ],
+                          ),
                           SizedBox(
                             height: Dimensions.height20(context),
                           ),
