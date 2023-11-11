@@ -15,14 +15,14 @@ class _EditProdukPageState extends State<EditProdukPage> {
   final addCubit = BaseLogic<ProdukRes>();
   String? image;
   bool? isRecomend;
+  bool? isTersedia;
   final namaCon = TextEditingController();
   final deskripsiCon = TextEditingController();
   final kategoriCon = TextEditingController();
   final hargaCon = TextEditingController(text: "0");
   final estimasiCon = TextEditingController(text: "0");
   void getData() async {
-    final res = await getCubit.fetch(
-        Repositories.getSingleProduk, ProdukRes(kode: widget.kode));
+    final res = await getCubit.fetch(Repositories.getSingleProduk, ProdukRes(kode: widget.kode));
     if (res is BaseLogicSuccess<BaseResponse<ProdukRes>>) {
       namaCon.text = res.data?.data?.nama ?? "-";
       deskripsiCon.text = res.data?.data?.deskripsi ?? "-";
@@ -31,60 +31,36 @@ class _EditProdukPageState extends State<EditProdukPage> {
       kategoriCon.text = res.data?.data?.kategori ?? "-";
       image = res.data?.data?.foto;
       isRecomend = res.data?.data?.recomend;
+      isTersedia = res.data?.data?.isActive ?? true;
       setState(() {});
     }
     if (res is BaseLogicError) {
       // ignore: use_build_context_synchronously
-      InfoCard(InfoType.error,
-              message:
-                  res.failure.response.data.toString().replaceAll("\"", ""))
-          .show(context);
+      InfoCard(InfoType.error, message: res.failure.response.data.toString().replaceAll("\"", "")).show(context);
     }
   }
 
   void addData() async {
-    final res = await addCubit.fetch(
-        Repositories.addProduk,
-        ProdukRes(
-            nama: namaCon.text,
-            deskripsi: deskripsiCon.text,
-            harga: int.tryParse(hargaCon.text.numericOnly()) ?? 0,
-            foto: image));
+    final res = await addCubit.fetch(Repositories.addProduk, ProdukRes(nama: namaCon.text, deskripsi: deskripsiCon.text, harga: int.tryParse(hargaCon.text.numericOnly()) ?? 0, foto: image));
     if (res is BaseLogicSuccess<BaseResponse<ProdukRes>>) {
       // ignore: use_build_context_synchronously
       context.pop();
     }
     if (res is BaseLogicError) {
       // ignore: use_build_context_synchronously
-      InfoCard(InfoType.error,
-              message:
-                  res.failure.response.data.toString().replaceAll("\"", ""))
-          .show(context);
+      InfoCard(InfoType.error, message: res.failure.response.data.toString().replaceAll("\"", "")).show(context);
     }
   }
 
   void updateData() async {
-    final res = await addCubit.fetch(
-        Repositories.updateProduk,
-        ProdukRes(
-            kode: widget.kode,
-            nama: namaCon.text,
-            deskripsi: deskripsiCon.text,
-            kategori: kategoriCon.text,
-            recomend: isRecomend,
-            estimasi: int.tryParse(estimasiCon.text.numericOnly()) ?? 0,
-            harga: int.tryParse(hargaCon.text.numericOnly()) ?? 0,
-            foto: image));
+    final res = await addCubit.fetch(Repositories.updateProduk, ProdukRes(kode: widget.kode, nama: namaCon.text, deskripsi: deskripsiCon.text, kategori: kategoriCon.text, recomend: isRecomend, estimasi: int.tryParse(estimasiCon.text.numericOnly()) ?? 0, harga: int.tryParse(hargaCon.text.numericOnly()) ?? 0, foto: image, isActive: isTersedia));
     if (res is BaseLogicSuccess<BaseResponse<ProdukRes>>) {
       // ignore: use_build_context_synchronously
       getData();
     }
     if (res is BaseLogicError) {
       // ignore: use_build_context_synchronously
-      InfoCard(InfoType.error,
-              message:
-                  res.failure.response.data.toString().replaceAll("\"", ""))
-          .show(context);
+      InfoCard(InfoType.error, message: res.failure.response.data.toString().replaceAll("\"", "")).show(context);
     }
   }
 
@@ -139,7 +115,9 @@ class _EditProdukPageState extends State<EditProdukPage> {
             keyboardType: TextInputType.number,
             prefix: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [MainText("Rp")],
+              children: [
+                MainText("Rp")
+              ],
             ),
           ),
           20.v,
@@ -149,13 +127,31 @@ class _EditProdukPageState extends State<EditProdukPage> {
             keyboardType: TextInputType.number,
             suffix: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [MainText("Menit")],
+              children: [
+                MainText("Menit")
+              ],
             ),
           ),
           20.v,
           MainTextField(
             controller: kategoriCon,
             label: "Kategori",
+          ),
+          20.v,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              MainText(
+                "Tersedia",
+                style: TextStyle(fontSize: context.fontSize(20)),
+              ),
+              Switch(
+                value: isTersedia == true,
+                onChanged: (value) => setState(() {
+                  isTersedia = value;
+                }),
+              )
+            ],
           ),
           20.v,
           Row(

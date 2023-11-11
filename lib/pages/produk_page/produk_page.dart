@@ -22,17 +22,13 @@ class _ProdukPageState extends State<ProdukPage> {
       message: "Apakah anda yakin ingin melanjutkan",
     ).show(context);
     if (isConfirm != true) return;
-    final res = await BaseLogic<ProdukRes>()
-        .fetch(Repositories.deleteProduk, ProdukRes(kode: kode));
+    final res = await BaseLogic<ProdukRes>().fetch(Repositories.deleteProduk, ProdukRes(kode: kode));
     if (res is BaseLogicSuccess<BaseResponse<ProdukRes>>) {
       getData();
     }
     if (res is BaseLogicError) {
       // ignore: use_build_context_synchronously
-      InfoCard(InfoType.error,
-              message:
-                  res.failure.response.data.toString().replaceAll("\"", ""))
-          .show(context);
+      InfoCard(InfoType.error, message: res.failure.response.data.toString().replaceAll("\"", "")).show(context);
     }
   }
 
@@ -45,10 +41,7 @@ class _ProdukPageState extends State<ProdukPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-            onPressed: () =>
-                context.push(const EditProdukPage()).then((value) => getData()),
-            child: const Icon(Icons.add)),
+        floatingActionButton: FloatingActionButton(onPressed: () => context.push(const EditProdukPage()).then((value) => getData()), child: const Icon(Icons.add)),
         body: BaseBlocBuilder(
           cubit: getCubit,
           onLoading: (cubit) => const Center(
@@ -72,40 +65,40 @@ class _ProdukPageState extends State<ProdukPage> {
               Expanded(
                 child: ListView.builder(
                     itemCount: data.data?.length ?? 0,
-                    itemBuilder: (context, index) => Slidable(
-                          endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) async {
-                                    deleteData(data.data?[index].kode);
-                                  },
-                                  icon: Icons.delete_forever,
-                                  backgroundColor: Colors.red[400]!,
-                                  label: "Hapus",
-                                )
-                              ]),
-                          child: ListTile(
-                            onTap: () => context
-                                .push(EditProdukPage(
-                                  kode: data.data?[index].kode,
-                                ))
-                                .then((value) => getData()),
-                            dense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
-                            leading: MainNetworkImage(
-                              image: data.data?[index].foto,
-                              fit: BoxFit.fill,
-                            ),
-                            title: MainText(
-                              data.data?[index].nama,
-                            ),
-                            subtitle: MainText(
-                              data.data?[index].deskripsi,
-                            ),
-                            trailing: MainText(
-                              data.data?[index].harga.toCurrency(),
+                    itemBuilder: (context, index) => Container(
+                          color: data.data?[index].isActive == false ? Colors.grey.withOpacity(.5) : null,
+                          child: Slidable(
+                            endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+                              SlidableAction(
+                                onPressed: (context) async {
+                                  deleteData(data.data?[index].kode);
+                                },
+                                icon: Icons.delete_forever,
+                                backgroundColor: Colors.red[400]!,
+                                label: "Hapus",
+                              )
+                            ]),
+                            child: ListTile(
+                              onTap: () => context
+                                  .push(EditProdukPage(
+                                    kode: data.data?[index].kode,
+                                  ))
+                                  .then((value) => getData()),
+                              dense: true,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              leading: MainNetworkImage(
+                                image: data.data?[index].foto,
+                                fit: BoxFit.fill,
+                              ),
+                              title: MainText(
+                                data.data?[index].nama,
+                              ),
+                              subtitle: MainText(
+                                data.data?[index].deskripsi,
+                              ),
+                              trailing: MainText(
+                                data.data?[index].harga.toCurrency(),
+                              ),
                             ),
                           ),
                         )),
