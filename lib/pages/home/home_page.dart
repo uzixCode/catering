@@ -156,26 +156,32 @@ class _HomePageState extends State<HomePage> {
                                     onTap: () => context.push(DetailProdukPage(
                                       kode: data.data?[index].kode,
                                     )),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: Dimensions.pageViewContainer(context),
-                                          margin: EdgeInsets.only(left: Dimensions.width10(context), right: Dimensions.width10(context)),
-                                          decoration: BoxDecoration(color: index.isEven ? const Color(0xFF69c5df) : const Color(0xFF9294cc), image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(locator<Htreq>().base.baseUrl + (data.data?[index].foto ?? "")))),
-                                        ),
-                                        if (data.data?[index].isActive == false)
-                                          Positioned.fill(
-                                              child: Container(
-                                            color: Colors.grey.withOpacity(.8),
-                                          )),
-                                        if (data.data?[index].isActive == false)
-                                          const Align(
-                                              alignment: Alignment.center,
-                                              child: MainText(
-                                                "Tidak tersedia",
-                                                style: TextStyle(color: Colors.white),
-                                              ))
-                                      ],
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      height: Dimensions.pageViewContainer(context),
+                                      margin: EdgeInsets.only(left: Dimensions.width10(context), right: Dimensions.width10(context)),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(Dimensions.radius30(context)),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(color: index.isEven ? const Color(0xFF69c5df) : const Color(0xFF9294cc), image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(locator<Htreq>().base.baseUrl + (data.data?[index].foto ?? "")))),
+                                          ),
+                                          if (data.data?[index].isActive == false)
+                                            Positioned.fill(
+                                                child: Container(
+                                              color: Colors.grey.withOpacity(.8),
+                                            )),
+                                          if (data.data?[index].isActive == false)
+                                            const Align(
+                                                alignment: Alignment.center,
+                                                child: MainText(
+                                                  "Tidak tersedia",
+                                                  style: TextStyle(color: Colors.white),
+                                                ))
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Align(
