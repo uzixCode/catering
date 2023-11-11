@@ -19,8 +19,7 @@ class _HomePageState extends State<HomePage> {
   CrossFadeState state = CrossFadeState.showFirst;
   final searchCon = TextEditingController();
   Future getData([String? keyword]) async {
-    await getCubit.fetch(
-        Repositories.postSearchProduk, keyword ?? searchCon.text);
+    await getCubit.fetch(Repositories.postSearchProduk, keyword ?? searchCon.text);
   }
 
   Future getDataRcomend() async {
@@ -56,12 +55,8 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(
-                    top: Dimensions.height45(context),
-                    bottom: Dimensions.height15(context)),
-                padding: EdgeInsets.only(
-                    left: Dimensions.width20(context),
-                    right: Dimensions.width20(context)),
+                margin: EdgeInsets.only(top: Dimensions.height45(context), bottom: Dimensions.height15(context)),
+                padding: EdgeInsets.only(left: Dimensions.width20(context), right: Dimensions.width20(context)),
                 child: AnimatedCrossFade(
                   duration: const Duration(milliseconds: 500),
                   crossFadeState: state,
@@ -71,17 +66,13 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                           child: Container(
                         height: Dimensions.height45(context),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                                Dimensions.height45(context))),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(Dimensions.height45(context))),
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16),
                             child: TextField(
                               controller: searchCon,
-                              decoration: const InputDecoration.collapsed(
-                                  hintText: "Cari Produk"),
+                              decoration: const InputDecoration.collapsed(hintText: "Cari Produk"),
                               onChanged: (value) => getData(),
                             ),
                           ),
@@ -97,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                             width: Dimensions.width45(context),
                             height: Dimensions.height45(context),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius15(context)),
+                              borderRadius: BorderRadius.circular(Dimensions.radius15(context)),
                               color: AppColors.mainColor,
                             ),
                             child: Icon(
@@ -123,8 +113,7 @@ class _HomePageState extends State<HomePage> {
                             width: Dimensions.width45(context),
                             height: Dimensions.height45(context),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.radius15(context)),
+                              borderRadius: BorderRadius.circular(Dimensions.radius15(context)),
                               color: AppColors.mainColor,
                             ),
                             child: Icon(
@@ -146,10 +135,8 @@ class _HomePageState extends State<HomePage> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              Dimensions.width30(context), 0, 0, 20),
-                          child: BigText(
-                              text: "Recomended", size: context.fontSize(18)),
+                          padding: EdgeInsets.fromLTRB(Dimensions.width30(context), 0, 0, 20),
+                          child: BigText(text: "Recomended", size: context.fontSize(18)),
                         )),
                   if (state == CrossFadeState.showFirst)
                     BaseBlocBuilder(
@@ -162,88 +149,66 @@ class _HomePageState extends State<HomePage> {
                               options: CarouselOptions(
                                   enlargeCenterPage: true,
                                   // enableInfiniteScroll: true,
-                                  height:
-                                      Dimensions.pageViewContainer(context) +
-                                          Dimensions.height30(context)),
+                                  height: Dimensions.pageViewContainer(context) + Dimensions.height30(context)),
                               itemBuilder: (context, index, realIndex) => Stack(
                                 children: [
                                   GestureDetector(
                                     onTap: () => context.push(DetailProdukPage(
                                       kode: data.data?[index].kode,
                                     )),
-                                    child: Container(
-                                      height:
-                                          Dimensions.pageViewContainer(context),
-                                      margin: EdgeInsets.only(
-                                          left: Dimensions.width10(context),
-                                          right: Dimensions.width10(context)),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.radius30(context)),
-                                          color: index.isEven
-                                              ? const Color(0xFF69c5df)
-                                              : const Color(0xFF9294cc),
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                  locator<Htreq>()
-                                                          .base
-                                                          .baseUrl +
-                                                      (data.data?[index].foto ??
-                                                          "")))),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          height: Dimensions.pageViewContainer(context),
+                                          margin: EdgeInsets.only(left: Dimensions.width10(context), right: Dimensions.width10(context)),
+                                          decoration: BoxDecoration(color: index.isEven ? const Color(0xFF69c5df) : const Color(0xFF9294cc), image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(locator<Htreq>().base.baseUrl + (data.data?[index].foto ?? "")))),
+                                        ),
+                                        if (data.data?[index].isActive == false)
+                                          Positioned.fill(
+                                              child: Container(
+                                            color: Colors.grey.withOpacity(.8),
+                                          )),
+                                        if (data.data?[index].isActive == false)
+                                          const Align(
+                                              alignment: Alignment.center,
+                                              child: MainText(
+                                                "Tidak tersedia",
+                                                style: TextStyle(color: Colors.white),
+                                              ))
+                                      ],
                                     ),
                                   ),
                                   Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          // height: Dimensions.pageViewTextContainer(
-                                          //     context),
-                                          margin: EdgeInsets.only(
-                                            left: Dimensions.width30(context),
-                                            right: Dimensions.width30(context),
-                                            // bottom: Dimensions.height30(context),
-                                          ),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions.radius20(
-                                                          context)),
-                                              color: Colors.white,
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color(0xFFe8e8e8),
-                                                  blurRadius: 5.0,
-                                                  offset: Offset(0, 5),
-                                                ),
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  offset: Offset(-5, 0),
-                                                ),
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  offset: Offset(5, 0),
-                                                )
-                                              ]),
-                                          child: Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 20),
-                                              child: BigText(
-                                                text: data.data?[index].nama ??
-                                                    "-",
-                                                overflow: TextOverflow.ellipsis,
-                                                size:
-                                                    Dimensions.font26(context),
-                                              ),
-                                            ),
-                                          ),
+                                    child: Container(
+                                      // height: Dimensions.pageViewTextContainer(context),
+                                      margin: EdgeInsets.only(
+                                        left: Dimensions.width30(context),
+                                        right: Dimensions.width30(context),
+                                        // bottom: Dimensions.height30(context),
+                                      ),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.radius20(context)), color: Colors.white, boxShadow: const [
+                                        BoxShadow(
+                                          color: Color(0xFFe8e8e8),
+                                          blurRadius: 5.0,
+                                          offset: Offset(0, 5),
                                         ),
-                                      ],
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          offset: Offset(-5, 0),
+                                        ),
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          offset: Offset(5, 0),
+                                        )
+                                      ]),
+                                      child: Container(
+                                        padding: EdgeInsets.only(top: Dimensions.height20(context), bottom: Dimensions.height20(context), left: Dimensions.height15(context), right: Dimensions.height15(context)),
+                                        child: AppColumn(
+                                          text: data.data?[index].nama ?? "-",
+                                          est: data.data?[index].estimasi,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -253,15 +218,12 @@ class _HomePageState extends State<HomePage> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              Dimensions.width30(context), 20, 0, 10),
-                          child: BigText(
-                              text: "Kategori", size: context.fontSize(18)),
+                          padding: EdgeInsets.fromLTRB(Dimensions.width30(context), 20, 0, 10),
+                          child: BigText(text: "Kategori", size: context.fontSize(18)),
                         )),
                   if (state == CrossFadeState.showFirst)
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 0, bottom: 12),
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 12),
                       child: Row(
                         children: [
                           Expanded(
@@ -278,12 +240,9 @@ class _HomePageState extends State<HomePage> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
-                                            Expanded(
-                                                child: Image.asset(
-                                                    "assets/image/catering.png")),
+                                            Expanded(child: Image.asset("assets/image/catering.png")),
                                             const SizedBox(
                                               height: 5,
                                             ),
@@ -307,12 +266,9 @@ class _HomePageState extends State<HomePage> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
-                                            Expanded(
-                                                child: Image.asset(
-                                                    "assets/image/kue_kering.png")),
+                                            Expanded(child: Image.asset("assets/image/kue_kering.png")),
                                             const SizedBox(
                                               height: 5,
                                             ),
@@ -336,12 +292,9 @@ class _HomePageState extends State<HomePage> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
-                                            Expanded(
-                                                child: Image.asset(
-                                                    "assets/image/kue_basah.png")),
+                                            Expanded(child: Image.asset("assets/image/kue_basah.png")),
                                             const SizedBox(
                                               height: 5,
                                             ),
@@ -367,91 +320,65 @@ class _HomePageState extends State<HomePage> {
                                   kode: data.data?[index].kode,
                                 )),
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: Dimensions.width20(context),
-                                      right: Dimensions.width20(context),
-                                      bottom: Dimensions.height10(context)),
+                                  margin: EdgeInsets.only(left: Dimensions.width20(context), right: Dimensions.width20(context), bottom: Dimensions.height10(context)),
                                   child: Row(
                                     children: [
                                       Container(
                                         clipBehavior: Clip.antiAlias,
-                                        width:
-                                            Dimensions.listViewImgSize(context),
-                                        height:
-                                            Dimensions.listViewTextConstSize(
-                                                context),
+                                        width: Dimensions.listViewImgSize(context),
+                                        height: Dimensions.listViewTextConstSize(context),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              Dimensions.radius20(context)),
+                                          borderRadius: BorderRadius.circular(Dimensions.radius20(context)),
                                           color: Colors.white38,
                                         ),
-                                        child: MainNetworkImage(
-                                          image: data.data?[index].foto,
-                                          fit: BoxFit.cover,
+                                        child: Stack(
+                                          children: [
+                                            Positioned.fill(
+                                              child: MainNetworkImage(
+                                                image: data.data?[index].foto,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            if (data.data?[index].isActive == false)
+                                              Positioned.fill(
+                                                  child: Container(
+                                                color: Colors.grey.withOpacity(.8),
+                                              )),
+                                            if (data.data?[index].isActive == false)
+                                              const Align(
+                                                  alignment: Alignment.center,
+                                                  child: MainText(
+                                                    "Tidak tersedia",
+                                                    style: TextStyle(color: Colors.white),
+                                                  ))
+                                          ],
                                         ),
                                       ),
                                       Expanded(
                                         child: Container(
-                                          height:
-                                              Dimensions.listViewTextConstSize(
-                                                  context),
+                                          height: Dimensions.listViewTextConstSize(context),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(
-                                                    Dimensions.radius20(
-                                                        context)),
-                                                bottomRight: Radius.circular(
-                                                    Dimensions.radius20(
-                                                        context))),
+                                            borderRadius: BorderRadius.only(topRight: Radius.circular(Dimensions.radius20(context)), bottomRight: Radius.circular(Dimensions.radius20(context))),
                                             color: Colors.white,
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left:
-                                                    Dimensions.width10(context),
-                                                right: Dimensions.width10(
-                                                    context)),
+                                            padding: EdgeInsets.only(left: Dimensions.width10(context), right: Dimensions.width10(context)),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                BigText(
-                                                    text: data.data?[index]
-                                                            .nama ??
-                                                        "-"),
+                                                BigText(text: data.data?[index].nama ?? "-"),
                                                 SizedBox(
-                                                  height: Dimensions.height10(
-                                                      context),
+                                                  height: Dimensions.height10(context),
                                                 ),
                                                 SmallText(
-                                                  text: data.data?[index]
-                                                          .deskripsi ??
-                                                      "-",
+                                                  text: data.data?[index].deskripsi ?? "-",
                                                   maxLines: 1,
                                                 ),
                                                 SizedBox(
-                                                  height: Dimensions.height10(
-                                                      context),
+                                                  height: Dimensions.height10(context),
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: MainText(
-                                                          "Rp ${data.data?[index].harga.toCurrency()}"),
-                                                    ),
-                                                    IconAndTextWidget(
-                                                        icon: Icons
-                                                            .access_time_rounded,
-                                                        text: data.data?[index]
-                                                                .estimasi
-                                                                .toCurrency() ??
-                                                            "0",
-                                                        iconColor: AppColors
-                                                            .iconColor2),
-                                                  ],
-                                                ),
+                                                IconAndTextWidget(icon: Icons.access_time_rounded, text: data.data?[index].estimasi.toCurrency() ?? "0", iconColor: AppColors.iconColor2),
                                               ],
                                             ),
                                           ),
